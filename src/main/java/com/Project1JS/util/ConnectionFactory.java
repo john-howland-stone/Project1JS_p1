@@ -4,18 +4,25 @@ import java.io.Closeable;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
-import java.util.Properties;
 
+/**
+ * Factory class that manages connections to the database
+ * Regulates the max number of connections the program can use
+ */
 public class ConnectionFactory implements Closeable {
 
-    public static final int MAX_CONNECTIONS = 4;
+    public static final int MAX_CONNECTIONS = 6;
     private final Connection[] connectionPool = new Connection[MAX_CONNECTIONS];
 
     private static ConnectionFactory instance;
 
+    /**
+     * Constructor that initializes the connection pool
+     */
+
     private ConnectionFactory() {
         for(int i = 0; i< MAX_CONNECTIONS; i++){
-            connectionPool[i] = createConnection("dev");
+            connectionPool[i] = createConnection();
         }
         try {
             Thread.sleep(1000);
@@ -24,6 +31,10 @@ public class ConnectionFactory implements Closeable {
         }
     }
 
+    /**
+     * Singleton design pattern implementation
+     * @return the singleton instance
+     */
     synchronized public static ConnectionFactory getInstance() {
         if (instance == null) {
             instance = new ConnectionFactory();
@@ -32,8 +43,12 @@ public class ConnectionFactory implements Closeable {
     }
 
 
-    private Connection createConnection(String profile) {
-        Properties props = new Properties();
+    /**
+     * Creates a connection for the program to use
+     * @return the created connection
+     */
+
+    private Connection createConnection() {
         try {
             return DriverManager.getConnection(
                     "jdbc:postgresql://john-howland-stone-revature.csxskrlqp9f1.us-east-2.rds.amazonaws.com/postgres?currentSchema=public",
@@ -45,10 +60,17 @@ public class ConnectionFactory implements Closeable {
         }
     }
 
+    /**
+     * Getter for the connection pool
+     * @return the connection pool
+     */
     public Connection[] getConnectionPool() {
         return connectionPool;
     }
 
+    /**
+     * Closes a connection
+     */
     @Override
     public void close() {
         for(Connection con: connectionPool){

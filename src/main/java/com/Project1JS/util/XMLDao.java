@@ -3,12 +3,22 @@ package com.Project1JS.util;
 import java.sql.*;
 import java.util.ArrayList;
 
+/**
+ * Class for handling interactions with the database
+ */
 public class XMLDao {
     private static XMLDao instance;
 
+    /**
+     * Singleton constructor
+     */
     private XMLDao() {
     }
 
+    /**
+     *  Singleton implementation
+     * @return the singleton instance
+     */
     synchronized public static XMLDao getInstance() {
         if (instance == null) {
             instance = new XMLDao();
@@ -16,20 +26,30 @@ public class XMLDao {
         return instance;
     }
 
-    public String createOrUpdate(String tableName, ArrayList<String> valueList) {
+    /**
+     * Method that appends data to tables. The table will be created if it doesn't yet exist.
+     * @param tableName Table name to append to
+     * @param valueList Values to append
+     * @return A status message for the user
+     */
+    public String createOrAppend(String tableName, ArrayList<String> valueList) {
         ResultSet rs;
         try {
             ConnectionSession sess = new ConnectionSession();
             Connection conn = sess.getActiveConnection();
             DatabaseMetaData md = conn.getMetaData();
             rs = md.getTables(null, "public", tableName, null);
-            PreparedStatement ps = null;
+            PreparedStatement ps;
             if (rs == null || !rs.next()) {
                 StringBuilder statementBuilder = new StringBuilder("create table " + tableName + " (");
                 for (int i = 0; i < valueList.size() - 1; i++) {
-                    statementBuilder.append("value" + i + " text, ");
+                    statementBuilder.append("value");
+                    statementBuilder.append(i);
+                    statementBuilder.append(" text, ");
                 }
-                statementBuilder.append("value" + (valueList.size() - 1) + " text");
+                statementBuilder.append("value");
+                statementBuilder.append(valueList.size() - 1);
+                statementBuilder.append(" text");
                 statementBuilder.append(")");
                 ps = conn.prepareStatement(statementBuilder.toString());
                 ps.executeUpdate();
@@ -72,6 +92,11 @@ public class XMLDao {
 
     }
 
+    /**
+     * Method that reads and returns data from a table
+     * @param tableName the table name to read
+     * @return the data from the table
+     */
     public String getAll(String tableName) {
         try {
             ConnectionSession sess = new ConnectionSession();
@@ -113,20 +138,45 @@ public class XMLDao {
         }
     }
 
-    public boolean remove(String tableName, int index, String value) {
+    /**
+     * Removes data from a table based matching a value at an index
+     * @param tableName the table to delete from
+     * @param index the index to search
+     * @param value the value to match
+     */
+    public void remove(String tableName, int index, String value) {
         try (ConnectionSession sess = new ConnectionSession()) {
             Connection conn = sess.getActiveConnection();
             PreparedStatement ps = conn.prepareStatement("delete from "+ tableName + " where " + "value" + index +" = ?");
             ps.setString(1, value);
-            int i = ps.executeUpdate();
+            ps.executeUpdate();
             //ps.close();
             //conn.close();
             sess.close();
-            return i > 0;
-        } catch (SQLException throwables) {
-            return false;
         } catch (Exception e) {
-            return false;
+        }
+
+    }
+
+    /**
+     * Updates values in a table if the value at the index matches the desired value
+     * @param tableName table to update
+     * @param index index to update
+     * @param oldvalue value to search for
+     * @param newvalue value to replace with
+     */
+    public void update(String tableName, int index, String oldvalue,String newvalue) {
+        //TODO implement this
+        try (ConnectionSession sess = new ConnectionSession()) {
+            Connection conn = sess.getActiveConnection();
+            PreparedStatement ps = conn.prepareStatement("update "+ tableName + " set value" + index + " = ? where " + "value" + index +" = ?");
+            ps.setString(1, newvalue);
+            ps.setString(2, oldvalue);
+            ps.executeUpdate();
+            //ps.close();
+            //conn.close();
+            sess.close();
+        } catch (Exception e) {
         }
 
     }

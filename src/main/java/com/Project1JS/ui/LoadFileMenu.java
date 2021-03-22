@@ -1,8 +1,7 @@
 package com.Project1JS.ui;
 
-import com.Project1JS.util.XMLExecutor;
 import com.Project1JS.util.XMLTransaction;
-import com.Project1JS.util.XMLWriteQuery;
+import com.Project1JS.model.XMLWriteQuery;
 import org.w3c.dom.Document;
 import org.w3c.dom.NodeList;
 
@@ -14,7 +13,24 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Scanner;
 
+/**
+ * Class for handling loading XML Files into the current transaction.
+ * The root element of the XML file is the table name and <Object> elements contain the data as self closing elements.
+ * Due to XML limitations numbers cannot be loaded this way.
+ * ex:
+ * <TableName>
+ *     <Object>
+ *         <Value1/>
+ *         <Value2/>
+ *     </Object>
+ * </TableName>
+ */
+
 public class LoadFileMenu {
+    /**
+     * Shows the file loading UI
+     * @param scan scanner used for input
+     */
     public void showMenu(Scanner scan) {
         String answer;
         do{
@@ -25,9 +41,9 @@ public class LoadFileMenu {
                 }
             DocumentBuilderFactory factory =
                     DocumentBuilderFactory.newInstance();
-            DocumentBuilder builder = null;
-            Document doc = null;
-            File inputFile = null;
+            DocumentBuilder builder;
+            Document doc;
+            File inputFile;
 
             try {
                 builder = factory.newDocumentBuilder();

@@ -12,9 +12,9 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.concurrent.TimeUnit;
 
-public class TestCreateOrUpdateFromFile {
+public class TestCreateOrAppendFromFile {
     @Test
-    public void testCreateorUpdateFromFileValid() throws InterruptedException {
+    public void testCreateorAppendFromFile() throws InterruptedException {
         DocumentBuilderFactory factory =
                 DocumentBuilderFactory.newInstance();
         DocumentBuilder builder = null;

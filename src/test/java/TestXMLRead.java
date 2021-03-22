@@ -1,10 +1,6 @@
-import com.Project1JS.util.XMLRead;
-import com.Project1JS.util.XMLReadCache;
-import org.junit.Assert;
-import org.junit.Test;
+import com.Project1JS.model.XMLRead;
+import com.Project1JS.model.XMLReadCache;
 import org.junit.jupiter.api.Assertions;
-
-import java.util.ArrayList;
 
 public class TestXMLRead {
     //@Test

@@ -1,12 +1,19 @@
 package com.Project1JS.ui;
 
 import com.Project1JS.util.XMLTransaction;
-import com.Project1JS.util.XMLWriteQuery;
 
-import java.util.ArrayList;
 import java.util.Scanner;
 
+/**
+ * UI Class for managing Transactions
+ * Allows the user to commit, create savepoints and rollback to previous save points
+ */
+
 public class TransactionManagementMenu {
+    /**
+     *  Shows the transaction Management UI
+     * @param scan scanner used for input
+     */
     public void showMenu(Scanner scan) {
         int answer;
         do {

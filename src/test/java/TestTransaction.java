@@ -1,6 +1,6 @@
 import com.Project1JS.util.XMLExecutor;
 import com.Project1JS.util.XMLTransaction;
-import com.Project1JS.util.XMLWriteQuery;
+import com.Project1JS.model.XMLWriteQuery;
 import org.junit.Test;
 import org.junit.jupiter.api.Assertions;
 
