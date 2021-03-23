@@ -30,9 +30,8 @@ public class XMLDao {
      * Method that appends data to tables. The table will be created if it doesn't yet exist.
      * @param tableName Table name to append to
      * @param valueList Values to append
-     * @return A status message for the user
      */
-    public String createOrAppend(String tableName, ArrayList<String> valueList) {
+    public void createOrAppend(String tableName, ArrayList<String> valueList) {
         ResultSet rs;
         try {
             ConnectionSession sess = new ConnectionSession();
@@ -61,7 +60,6 @@ public class XMLDao {
                 //rs.close();
                 //conn.close();
                 sess.close();
-                return "Number of elements for query to " + tableName + " does not match existing definition";
             }
             StringBuilder statementBuilder = new StringBuilder("insert into " + tableName + " values (");
             for (int i = 0; i < valueList.size() - 1; i++) {
@@ -72,22 +70,9 @@ public class XMLDao {
             for (int i = 0; i < valueList.size(); i++) {
                 ps.setString(i + 1, valueList.get(i));
             }
-            if (ps.executeUpdate() > 0) {
-                //ps.close();
-                //rs.close();
-                //conn.close();
-                sess.close();
-                return "Successfully wrote to database";
-            } else {
-                //ps.close();
-                //rs.close();
-                //conn.close();
-                sess.close();
-                return "Error writing to the database";
-            }
+            ps.executeUpdate();
+            sess.close();
         } catch (SQLException e) {
-            e.printStackTrace();
-            return "Error writing to the database";
         }
 
     }

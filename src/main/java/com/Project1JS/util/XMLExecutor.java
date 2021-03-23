@@ -31,16 +31,23 @@ public class XMLExecutor {
     }
 
     /**
-     * Runs a create or append query on a seperate thread
+     * Runs a create or append query on a separate thread
      * @param tablename table name for query
      * @param values values to put in the table
      */
     public void runXMLCreateorAppendQuery(String tablename, ArrayList<String> values) {
-        executor.execute(() -> System.out.println(XMLDao.getInstance().createOrAppend(tablename,values)));
+        executor.execute(() -> XMLDao.getInstance().createOrAppend(tablename,values));
     }
 
-    public void runXMLUpdateQuery(String tablename,int index, String oldvalue, String newvalue) {
-        executor.execute(() -> XMLDao.getInstance().update(tablename,index,oldvalue,newvalue));
+    /**
+     * Runs an update query on a separate thread
+     * @param tableName table to update
+     * @param index index to update
+     * @param oldvalue value to search for
+     * @param newvalue value to replace with
+     */
+    public void runXMLUpdateQuery(String tableName,int index, String oldvalue, String newvalue) {
+        executor.execute(() -> XMLDao.getInstance().update(tableName,index,oldvalue,newvalue));
     }
 
     public ExecutorService getExecutor() {
