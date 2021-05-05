@@ -10,7 +10,7 @@ Easily allows users to store and retrieve tables of Strings in an SQL free manne
 
 To-do list:
 
-Refacotr to allow the system to store any object instead of just Strings
+Refactor to allow the system to store any object instead of just Strings
 
 Getting Started
 Clone the repository via "git clonehttps://github.com/john-howland-stone/Project1JS_p1.git"
