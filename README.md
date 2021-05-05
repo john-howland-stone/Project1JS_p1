@@ -4,6 +4,7 @@ A simple framwork for storing tables of Strings
 
 Technologies Used
 Java, SQL, JDBC, JUnit, PostgreSQL, Maven, AWS RDS, AWS EC2, AWS CodeBuild, AWS CodePipeline, Elastic Beanstalk, Mockito, DevOps, DBBeaver, Git, XML
+
 Features
 Easily allows users to store and retrieve tables of Strings in an SQL free manner
 
